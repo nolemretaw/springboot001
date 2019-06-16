@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.xxx.dto.xxxMapper">
+    <cache/>
+    <sql id="findAll">select * from emp</sql>
+
+    <select id="addEmp" parameterType="com.lala.dto.Emp">
+        insert into emp(name,sex,job,salary,hiredate,deptno)
+        values(#{name},#{sex},#{job},#{salary},#{hiredate},#{deptno})
+    </select>
+
+    <delete id="deleteEmp" parameterType="int">
+        delete from emp where id=#{id}
+    </delete>
+
+    <update id="updateEmp" parameterType="com.lala.dto.Emp">
+        update emp
+        <set>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="sex!=null">
+                sex=#{sex},
+            </if>
+            <if test="job!=null">
+                job=#{job},
+            </if>
+            <if test="salary!=0">
+                salary=#{salary},
+            </if>
+            <if test="hiredate!=null">
+                hiredate=#{hiredate},
+            </if>
+            <if test="deptno!=0">
+                deptno=#{deptno}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="findEmpById" parameterType="int" resultType="com.lala.dto.Emp">
+        <include refid="findAll"/> where id=#{id}
+    </select>
+
+</mapper>
